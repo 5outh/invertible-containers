@@ -1,0 +1,38 @@
+name:                invertible-containers
+version:             0.1.0.0
+github:              "5outh/invertible-containers"
+license:             MIT
+author:              "Benjamin Kovach"
+maintainer:          "bkovach13@gmail.com"
+copyright:           "2018 Benjamin Kovach"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+synopsis:            Containers with invertability built-in
+category:            Data Structures
+
+description:         Please see the README on GitHub at <https://github.com/5outh/invertible-containers#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- containers
+- groups
+- QuickCheck
+- hspec
+- deepseq
+
+library:
+  source-dirs: src
+
+tests:
+  invertible-containers-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - invertible-containers
