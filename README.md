@@ -3,7 +3,7 @@
 Containers that can be inverted. For example:
 
 ```haskell
-λ> unInvertibleSet $ ISet.fromList [1,2,3] <> invert (ISet.fromList [1,2])
+λ> ISet.fromList [1,2,3] <> invert (ISet.fromList [1,2])
 fromList [3]
 ```
 
