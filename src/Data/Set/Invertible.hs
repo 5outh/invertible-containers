@@ -1,4 +1,6 @@
-{-# LANGUAGE DeriveGeneric #-}
+{-# LANGUAGE DeriveFoldable    #-}
+{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE DeriveTraversable #-}
 module Data.Set.Invertible
   ( InvertibleSet
   , unInvertibleSet
@@ -20,7 +22,7 @@ import           Test.QuickCheck.Arbitrary
 data InvertibleSet a = InvertibleSet
   { getPositive :: Set a
   , getNegative :: Set a
-  } deriving (Ord, Generic)
+  } deriving (Ord, Generic, Foldable)
 
 instance (Show a, Ord a) => Show (InvertibleSet a) where
   show s = show (unInvertibleSet s)
