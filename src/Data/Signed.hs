@@ -10,7 +10,7 @@ data Signed a = Signed
   { getNegative :: a
   , getPositive :: a
   }
-  deriving (Show)
+  deriving (Show, Ord)
 
 instance (Eq a, Group a) => Eq (Signed a) where
   s1 == s2 = unsigned s1 == unsigned s2
