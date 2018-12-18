@@ -1,3 +1,5 @@
+module Main where
+
 import           Data.Group
 import           Test.Hspec
 import           Test.QuickCheck
@@ -7,6 +9,8 @@ import qualified Data.Map.Lazy.Invertible   as MapLazy
 import qualified Data.Map.Strict.Invertible as MapStrict
 import           Data.Monoid
 import qualified Data.Set.Invertible        as Set
+import           Data.Signed                (Signed)
+import qualified Data.Signed                as Signed
 
 type Associative m = m -> m -> m -> Bool
 type Identity m = m -> Bool
@@ -61,3 +65,11 @@ main = hspec $ do
       quickCheck (rightIdentity :: Identity (List.InvertibleList Int))
     it "is a group"
       $ quickCheck (invertible :: Invertible (List.InvertibleList Int))
+
+  describe "Signed" $ do
+    it "is a semigroup"
+      $ quickCheck (associative :: Associative (Signed (Sum Int)))
+    it "is a monoid" $ do
+      quickCheck (leftIdentity :: Identity (Signed (Sum Int)))
+      quickCheck (rightIdentity :: Identity (Signed (Sum Int)))
+    it "is a group" $ quickCheck (invertible :: Invertible (Signed (Sum Int)))
