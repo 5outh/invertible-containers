@@ -2,9 +2,11 @@ import           Data.Group
 import           Test.Hspec
 import           Test.QuickCheck
 
-import qualified Data.Map.Lazy.Invertible      as MapLazy
-import qualified Data.Map.Strict.Invertible    as MapStrict
-import qualified Data.Set.Invertible           as Set
+import qualified Data.List.Invertible       as List
+import qualified Data.Map.Lazy.Invertible   as MapLazy
+import qualified Data.Map.Strict.Invertible as MapStrict
+import           Data.Monoid
+import qualified Data.Set.Invertible        as Set
 
 type Associative m = m -> m -> m -> Bool
 type Identity m = m -> Bool
@@ -50,3 +52,12 @@ main = hspec $ do
       quickCheck (rightIdentity :: Identity (MapLazy.InvertibleMap Int Int))
     it "is a group"
       $ quickCheck (invertible :: Invertible (MapLazy.InvertibleMap Int Int))
+
+  describe "invertible list" $ do
+    it "is a semigroup"
+      $ quickCheck (associative :: Associative (List.InvertibleList Int))
+    it "is a monoid" $ do
+      quickCheck (leftIdentity :: Identity (List.InvertibleList Int))
+      quickCheck (rightIdentity :: Identity (List.InvertibleList Int))
+    it "is a group"
+      $ quickCheck (invertible :: Invertible (List.InvertibleList Int))
