@@ -3,7 +3,7 @@
 {-# LANGUAGE DeriveTraversable #-}
 module Data.Bag
   ( Bag
-  , unBag
+  , toSet
   , union
   , difference
   , singleton
@@ -39,11 +39,11 @@ mapDiff a b = Set.fromList $ catMaybes $ Map.elems $ flip Map.mapWithKey a $ \k 
 instance (Ord a, Arbitrary a) => Arbitrary (Bag a) where
   arbitrary = Bag <$> arbitrary <*> arbitrary
 
-unBag :: Ord a => Bag a -> Set a
-unBag is = getPositive is `mapDiff` getNegative is
+toSet :: Ord a => Bag a -> Set a
+toSet is = getPositive is `mapDiff` getNegative is
 
 instance (Ord a, Eq a) => Eq (Bag a) where
-  a == b = unBag a == unBag b
+  a == b = toSet a == toSet b
 
 -- want to be able to "bring back" an element. how can that be done??? sum it
 instance Ord a => Semigroup (Bag a) where
@@ -74,4 +74,4 @@ difference :: Ord a => Bag a -> Bag a -> Bag a
 difference a b = a <> invert b
 
 toList :: Ord a => Bag a -> [a]
-toList = Set.toList . unBag
+toList = Set.toList . toSet
